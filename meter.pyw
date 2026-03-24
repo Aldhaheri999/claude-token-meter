@@ -54,8 +54,8 @@ class TokenMeter(tk.Tk):
 
         self.overrideredirect(True)
 
-        self.w = 340
-        self.h = 280
+        self.w = 200
+        self.h = 155
         x = self.winfo_screenwidth() - self.w - 20
         y = self.winfo_screenheight() - self.h - 60
         self.geometry(f"{self.w}x{self.h}+{x}+{y}")
@@ -79,44 +79,43 @@ class TokenMeter(tk.Tk):
 
     def _build_ui(self):
         # Title bar
-        title = tk.Frame(self, bg=ACCENT, height=28)
+        title = tk.Frame(self, bg=ACCENT, height=18)
         title.pack(fill="x")
         title.pack_propagate(False)
-        tk.Label(title, text="CLAUDE OUTPUT METER", font=("Segoe UI", 9, "bold"),
-                 fg="white", bg=ACCENT).pack(side="left", padx=10)
-        self.status_dot = tk.Label(title, text="●", font=("Segoe UI", 8),
+        tk.Label(title, text="CLAUDE OUTPUT", font=("Segoe UI", 7, "bold"),
+                 fg="white", bg=ACCENT).pack(side="left", padx=6)
+        self.status_dot = tk.Label(title, text="●", font=("Segoe UI", 6),
                                    fg=GREEN, bg=ACCENT)
-        self.status_dot.pack(side="right", padx=10)
+        self.status_dot.pack(side="right", padx=6)
 
         # Content
-        content = tk.Frame(self, bg=BG, padx=20, pady=12)
+        content = tk.Frame(self, bg=BG, padx=10, pady=6)
         content.pack(fill="both", expand=True)
 
         # Output tokens — the hero number
-        self.output_label = tk.Label(content, text="—", font=("Segoe UI", 36, "bold"),
+        self.output_label = tk.Label(content, text="—", font=("Segoe UI", 18, "bold"),
                                      fg="white", bg=BG)
         self.output_label.pack(anchor="w")
-        tk.Label(content, text="OUTPUT TOKENS", font=("Segoe UI", 8),
+        tk.Label(content, text="OUTPUT TOKENS", font=("Segoe UI", 6),
                  fg=DIM, bg=BG).pack(anchor="w")
 
         # API cost
-        tk.Frame(content, bg="#222", height=1).pack(fill="x", pady=10)
-        self.cost_label = tk.Label(content, text="—", font=("Segoe UI", 20, "bold"),
+        tk.Frame(content, bg="#222", height=1).pack(fill="x", pady=4)
+        self.cost_label = tk.Label(content, text="—", font=("Segoe UI", 11, "bold"),
                                    fg=ORANGE, bg=BG)
         self.cost_label.pack(anchor="w")
-        tk.Label(content, text="API EQUIVALENT (Opus $75/M output)", font=("Segoe UI", 8),
+        tk.Label(content, text="Opus API equiv ($75/M)", font=("Segoe UI", 6),
                  fg=DIM, bg=BG).pack(anchor="w")
 
         # Sessions + since date
-        tk.Frame(content, bg="#222", height=1).pack(fill="x", pady=10)
-        self.info_label = tk.Label(content, text="—", font=("Segoe UI", 11),
+        tk.Frame(content, bg="#222", height=1).pack(fill="x", pady=4)
+        self.info_label = tk.Label(content, text="—", font=("Segoe UI", 7),
                                    fg="#aaaaaa", bg=BG)
         self.info_label.pack(anchor="w")
 
         # Footer
-        self.footer = tk.Label(self, text="Dbl-click: rescan | R-click: quit",
-                               font=("Segoe UI", 7), fg="#333", bg=BG)
-        self.footer.pack(side="bottom", pady=1)
+        self.footer = tk.Label(self, text="", font=("Segoe UI", 6), fg="#333", bg=BG)
+        self.footer.pack(side="bottom")
 
     def _refresh(self):
         data = load_data()
