@@ -54,8 +54,8 @@ class TokenMeter(tk.Tk):
 
         self.overrideredirect(True)
 
-        self.w = 320
-        self.h = 220
+        self.w = 340
+        self.h = 280
         x = self.winfo_screenwidth() - self.w - 20
         y = self.winfo_screenheight() - self.h - 60
         self.geometry(f"{self.w}x{self.h}+{x}+{y}")
@@ -89,7 +89,7 @@ class TokenMeter(tk.Tk):
         self.status_dot.pack(side="right", padx=10)
 
         # Content
-        content = tk.Frame(self, bg=BG, padx=15, pady=10)
+        content = tk.Frame(self, bg=BG, padx=20, pady=12)
         content.pack(fill="both", expand=True)
 
         # Output tokens — the hero number
@@ -100,16 +100,16 @@ class TokenMeter(tk.Tk):
                  fg=DIM, bg=BG).pack(anchor="w")
 
         # API cost
-        tk.Frame(content, bg="#222", height=1).pack(fill="x", pady=6)
-        self.cost_label = tk.Label(content, text="—", font=("Segoe UI", 16, "bold"),
+        tk.Frame(content, bg="#222", height=1).pack(fill="x", pady=10)
+        self.cost_label = tk.Label(content, text="—", font=("Segoe UI", 20, "bold"),
                                    fg=ORANGE, bg=BG)
         self.cost_label.pack(anchor="w")
-        tk.Label(content, text="API EQUIVALENT (Opus $75/M output)", font=("Segoe UI", 7),
+        tk.Label(content, text="API EQUIVALENT (Opus $75/M output)", font=("Segoe UI", 8),
                  fg=DIM, bg=BG).pack(anchor="w")
 
         # Sessions + since date
-        tk.Frame(content, bg=BG, height=6).pack(fill="x")
-        self.info_label = tk.Label(content, text="—", font=("Segoe UI", 10),
+        tk.Frame(content, bg="#222", height=1).pack(fill="x", pady=10)
+        self.info_label = tk.Label(content, text="—", font=("Segoe UI", 11),
                                    fg="#aaaaaa", bg=BG)
         self.info_label.pack(anchor="w")
 
