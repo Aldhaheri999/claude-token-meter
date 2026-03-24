@@ -136,6 +136,16 @@ def full_scan():
         totals["sessions"] += 1
 
     totals["cost_usd"] = round(totals["cost_usd"], 2)
+
+    # Find the earliest session timestamp
+    earliest = None
+    for s in sessions.values():
+        ts = s.get("timestamp")
+        if ts:
+            if earliest is None or ts < earliest:
+                earliest = ts
+    totals["first_session"] = earliest
+
     data["sessions"] = sessions
     data["totals"] = totals
     data["last_scan"] = datetime.now().isoformat()

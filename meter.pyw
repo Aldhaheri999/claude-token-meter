@@ -99,11 +99,11 @@ class TokenMeter(tk.Tk):
         tk.Label(content, text="OUTPUT TOKENS", font=("Segoe UI", 8),
                  fg=DIM, bg=BG).pack(anchor="w")
 
-        # Sessions count inline
+        # Sessions + since date
         tk.Frame(content, bg="#222", height=1).pack(fill="x", pady=4)
-        self.sessions_label = tk.Label(content, text="—", font=("Segoe UI", 9),
-                                       fg=DIM, bg=BG)
-        self.sessions_label.pack(anchor="w")
+        self.info_label = tk.Label(content, text="—", font=("Segoe UI", 10),
+                                   fg="#aaaaaa", bg=BG)
+        self.info_label.pack(anchor="w")
 
         # Footer
         self.footer = tk.Label(self, text="Dbl-click: rescan | R-click: quit",
@@ -119,7 +119,17 @@ class TokenMeter(tk.Tk):
 
         t = data["totals"]
         self.output_label.config(text=format_tokens(t.get("output_tokens", 0)))
-        self.sessions_label.config(text=f"{t.get('sessions', 0)} sessions")
+
+        # Sessions + since date
+        since = t.get("first_session", "")
+        since_str = ""
+        if since:
+            try:
+                dt = datetime.fromisoformat(since.replace("Z", "+00:00"))
+                since_str = f"  ·  since {dt.strftime('%b %d, %Y')}"
+            except Exception:
+                pass
+        self.info_label.config(text=f"{t.get('sessions', 0)} sessions{since_str}")
 
         scan_time = data.get("last_scan", "")
         try:
