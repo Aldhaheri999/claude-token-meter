@@ -136,13 +136,6 @@ def full_scan():
         totals["sessions"] += 1
 
     totals["cost_usd"] = round(totals["cost_usd"], 2)
-    totals["total_tokens"] = (
-        totals["input_tokens"]
-        + totals["output_tokens"]
-        + totals["cache_read_input_tokens"]
-        + totals["cache_creation_input_tokens"]
-    )
-
     data["sessions"] = sessions
     data["totals"] = totals
     data["last_scan"] = datetime.now().isoformat()
@@ -152,11 +145,7 @@ def full_scan():
     print(f"\n{'='*50}")
     print(f"  New sessions found: {new_count}")
     print(f"  Total sessions:     {totals['sessions']}")
-    print(f"  Input tokens:       {totals['input_tokens']:,}")
-    print(f"  Output tokens:      {totals['output_tokens']:,}")
-    print(f"  Cache read:         {totals['cache_read_input_tokens']:,}")
-    print(f"  Cache creation:     {totals['cache_creation_input_tokens']:,}")
-    print(f"  TOTAL TOKENS:       {totals['total_tokens']:,}")
+    print(f"  OUTPUT TOKENS:      {totals['output_tokens']:,}")
     print(f"  API-equiv cost:     ${totals['cost_usd']:,.2f}")
     print(f"{'='*50}")
 

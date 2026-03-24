@@ -59,7 +59,7 @@ class TokenMeter(tk.Tk):
 
         # Window size and position (bottom-right corner)
         self.w = 320
-        self.h = 280
+        self.h = 200
         screen_w = self.winfo_screenwidth()
         screen_h = self.winfo_screenheight()
         x = screen_w - self.w - 20
@@ -116,7 +116,7 @@ class TokenMeter(tk.Tk):
         content = tk.Frame(self, bg=BG, padx=15, pady=10)
         content.pack(fill="both", expand=True)
 
-        # Total tokens (big number)
+        # Output tokens (big number — the real work Claude did)
         self.total_label = tk.Label(
             content,
             text="—",
@@ -128,44 +128,11 @@ class TokenMeter(tk.Tk):
 
         tk.Label(
             content,
-            text="LIFETIME TOKENS",
+            text="OUTPUT TOKENS",
             font=("Segoe UI", 8),
             fg=DIM,
             bg=BG,
         ).pack(anchor="w")
-
-        # Separator
-        tk.Frame(content, bg="#222", height=1).pack(fill="x", pady=8)
-
-        # Stats grid
-        grid = tk.Frame(content, bg=BG)
-        grid.pack(fill="x")
-
-        stats = [
-            ("INPUT", "input_val"),
-            ("OUTPUT", "output_val"),
-            ("CACHE R", "cache_r_val"),
-            ("CACHE W", "cache_w_val"),
-        ]
-
-        for col, (label, attr) in enumerate(stats):
-            tk.Label(
-                grid,
-                text=label,
-                font=("Segoe UI", 7),
-                fg=DIM,
-                bg=BG,
-            ).grid(row=0, column=col, padx=4, sticky="w")
-
-            val = tk.Label(
-                grid,
-                text="—",
-                font=("Segoe UI", 10, "bold"),
-                fg=FG,
-                bg=BG,
-            )
-            val.grid(row=1, column=col, padx=4, sticky="w")
-            setattr(self, attr, val)
 
         # Cost and sessions row
         tk.Frame(content, bg="#222", height=1).pack(fill="x", pady=8)
@@ -217,11 +184,7 @@ class TokenMeter(tk.Tk):
             return
 
         t = data["totals"]
-        self.total_label.config(text=format_tokens(t.get("total_tokens", 0)))
-        self.input_val.config(text=format_tokens(t.get("input_tokens", 0)))
-        self.output_val.config(text=format_tokens(t.get("output_tokens", 0)))
-        self.cache_r_val.config(text=format_tokens(t.get("cache_read_input_tokens", 0)))
-        self.cache_w_val.config(text=format_tokens(t.get("cache_creation_input_tokens", 0)))
+        self.total_label.config(text=format_tokens(t.get("output_tokens", 0)))
 
         cost = t.get("cost_usd", 0)
         self.cost_label.config(text=f"${cost:,.2f}")
